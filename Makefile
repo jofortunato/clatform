@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I -Wall -ansi -pedantic
+CFLAGS=-g -Wall -std=c99 -pedantic
 SRC=src
 OBJ=obj
 SRCS=$(wildcard $(SRC)/*.c)
