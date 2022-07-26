@@ -33,7 +33,10 @@ void main_menu(void)
             if (actor == NULL)
             {
                 actor = load_saved_game();
-                printf("Health: %d\n", actor->health);
+                if (actor == NULL)
+                {
+                    printf("Saved game file not found!\n");
+                }
             }
             else
             {
