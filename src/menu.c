@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
+#include "load.h"
+#include "actor.h"
 
 void main_menu(void)
 {
     int menu_opt = 0;
     char user_input[3];
+
+    ACTOR *actor = NULL;
 
     do
     {
@@ -26,9 +30,22 @@ void main_menu(void)
             break;
         case 2:
             printf("Option 2. Load Game\n");
+            if (actor == NULL)
+            {
+                actor = load_saved_game();
+                printf("Health: %d\n", actor->health);
+            }
+            else
+            {
+                printf("Game already loaded.\n");
+            }
             break;
         case 3:
             // Exits the main menu via the do while condition.
+            if (actor != NULL)
+            {
+                free(actor);
+            }
             break;
         default:
             printf("Wrong option. Try again, select between 1 and 3.\n");
