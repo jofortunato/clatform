@@ -3,7 +3,6 @@
 
 #include "menu.h"
 #include "load.h"
-#include "actor.h"
 #include "game.h"
 
 int main(void)
@@ -40,6 +39,8 @@ int main(void)
                         actor = NULL;
                     }
                 }
+
+                start_game(game, actor);
             }
             else
             {

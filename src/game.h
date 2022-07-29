@@ -1,6 +1,8 @@
 #ifndef H_GAME
 #define H_GAME
 
+#define MAX_CHARS 50
+
 typedef struct POS
 {
     int x;
@@ -53,4 +55,12 @@ typedef struct GAME
 
 } GAME;
 
+typedef struct ACTOR
+{
+    char name[MAX_CHARS];
+    int health;
+    int coins;
+    int level;
+    POS position;
+} ACTOR;
 #endif
