@@ -52,4 +52,6 @@ Mkfile.old
 dkms.conf
 
 # User Needs
-.vscode
+.vscodesaves/*
+.vscode/*
+saves/*
