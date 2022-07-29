@@ -10,6 +10,7 @@ void main_menu(void)
     char user_input[3];
 
     ACTOR *actor = NULL;
+    GAME *game = NULL;
 
     do
     {
@@ -30,12 +31,24 @@ void main_menu(void)
             break;
         case 2:
             printf("Option 2. Load Game\n");
-            if (actor == NULL)
+            if ((actor == NULL) & (game == NULL))
             {
                 actor = load_saved_game();
                 if (actor == NULL)
                 {
                     printf("Saved game file not found!\n");
+                }
+                else
+                {
+                    game = load_level(actor->level);
+                    if (game == NULL)
+                    {
+                        printf("Level file not found\n");
+                        free(actor);
+                        actor = NULL;
+                    }
+
+                    print_platform(game->coins);
                 }
             }
             else
@@ -45,9 +58,10 @@ void main_menu(void)
             break;
         case 3:
             // Exits the main menu via the do while condition.
-            if (actor != NULL)
+            if ((actor == NULL) & (game == NULL))
             {
                 free(actor);
+                free(game);
             }
             break;
         default:
