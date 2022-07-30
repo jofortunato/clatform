@@ -2,6 +2,8 @@
 #define H_GAME
 #include <ncurses.h>
 #include <stdbool.h>
+#include <unistd.h>
+
 #define MAX_CHARS 50
 
 typedef enum
@@ -78,4 +80,5 @@ bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game);
 bool is_outside_playground(POS position, GAME *game);
 bool has_platform(POS position, PLATFORM *platform);
 bool has_stair(POS position, STAIR *stair);
+bool is_falling(ACTOR *actor, GAME *game);
 #endif

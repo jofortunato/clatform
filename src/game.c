@@ -12,8 +12,12 @@ void start_game(GAME *game, ACTOR *actor)
 
     int ch;
     NEXT_MOVE next_move;
+    bool actor_is_falling;
+
     while ((ch = getch()) != 113) // Press q (ascii value 113) key to exit
     {
+        actor_is_falling = is_falling(actor, game);
+
         switch (ch)
         {
         case KEY_RIGHT:
@@ -58,6 +62,20 @@ void start_game(GAME *game, ACTOR *actor)
         default:
             break;
         }
+
+        while (actor_is_falling)
+        {
+            usleep(50000);
+            next_move = DOWN;
+            if (is_valid_movement(next_move, actor, game))
+            {
+                actor->position.y--;
+
+                werase(playground);
+                draw_game(game, actor, playground);
+            }
+            actor_is_falling = is_falling(actor, game);
+        }
     }
 
     delwin(playground);
@@ -100,7 +118,7 @@ bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game)
         {
             return false;
         }
-        else if (!has_stair(new_position, game->stairs))
+        else if (has_platform(new_position, game->platforms) && !has_stair(new_position, game->stairs))
         {
             return false;
         }
@@ -173,4 +191,22 @@ bool has_stair(POS position, STAIR *stair)
     }
 
     return false;
+}
+
+bool is_falling(ACTOR *actor, GAME *game)
+{
+    POS floor;
+    floor.x = actor->position.x;
+    floor.y = actor->position.y - 1;
+
+    if (has_stair(actor->position, game->stairs))
+    {
+        return false;
+    }
+    else if (has_platform(floor, game->platforms))
+    {
+        return false;
+    }
+
+    return true;
 }

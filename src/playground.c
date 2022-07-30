@@ -4,6 +4,7 @@ WINDOW *create_playground(GAME *game, ACTOR *actor)
 {
     initscr();
     cbreak();
+    timeout(500);
     keypad(stdscr, TRUE);
     noecho();
 
