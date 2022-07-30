@@ -1,8 +1,16 @@
 #ifndef H_GAME
 #define H_GAME
 #include <ncurses.h>
-
+#include <stdbool.h>
 #define MAX_CHARS 50
+
+typedef enum
+{
+    UP = 0,
+    RIGHT = 1,
+    DOWN = 2,
+    LEFT = 3,
+} NEXT_MOVE;
 
 typedef struct POS
 {
@@ -66,4 +74,6 @@ typedef struct ACTOR
 } ACTOR;
 
 void start_game(GAME *game, ACTOR *actor);
+bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game);
+bool is_outside_playground(POS position, GAME *game);
 #endif

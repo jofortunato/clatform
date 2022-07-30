@@ -11,33 +11,49 @@ void start_game(GAME *game, ACTOR *actor)
     playground = create_playground(game, actor);
 
     int ch;
+    NEXT_MOVE next_move;
     while ((ch = getch()) != 113) // Press q (ascii value 113) key to exit
     {
         switch (ch)
         {
         case KEY_RIGHT:
-            actor->position.x++;
+            next_move = RIGHT;
+            if (is_valid_movement(next_move, actor, game))
+            {
+                actor->position.x++;
 
-            werase(playground);
-            draw_game(game, actor, playground);
+                werase(playground);
+                draw_game(game, actor, playground);
+            }
             break;
         case KEY_LEFT:
-            actor->position.x--;
+            next_move = LEFT;
+            if (is_valid_movement(next_move, actor, game))
+            {
+                actor->position.x--;
 
-            werase(playground);
-            draw_game(game, actor, playground);
+                werase(playground);
+                draw_game(game, actor, playground);
+            }
             break;
         case KEY_UP:
-            actor->position.y++;
-
-            werase(playground);
-            draw_game(game, actor, playground);
+            next_move = UP;
+            if (is_valid_movement(next_move, actor, game))
+            {
+                actor->position.y++;
+                werase(playground);
+                draw_game(game, actor, playground);
+            }
             break;
         case KEY_DOWN:
-            actor->position.y--;
+            next_move = DOWN;
+            if (is_valid_movement(next_move, actor, game))
+            {
+                actor->position.y--;
 
-            werase(playground);
-            draw_game(game, actor, playground);
+                werase(playground);
+                draw_game(game, actor, playground);
+            }
             break;
         default:
             break;
@@ -46,4 +62,71 @@ void start_game(GAME *game, ACTOR *actor)
 
     delwin(playground);
     endwin();
+}
+
+bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game)
+{
+    POS new_position = actor->position;
+
+    switch (next_move)
+    {
+    case UP:
+        new_position.y++;
+        if (is_outside_playground(new_position, game))
+        {
+            return false;
+        }
+
+        break;
+    case RIGHT:
+        new_position.x++;
+        if (is_outside_playground(new_position, game))
+        {
+            return false;
+        }
+
+        break;
+    case DOWN:
+        new_position.y--;
+        if (is_outside_playground(new_position, game))
+        {
+            return false;
+        }
+
+        break;
+    case LEFT:
+        new_position.x--;
+        if (is_outside_playground(new_position, game))
+        {
+            return false;
+        }
+
+        break;
+
+    default:
+        break;
+    }
+    return true;
+}
+
+bool is_outside_playground(POS position, GAME *game)
+{
+    if (position.x == 0)
+    {
+        return true;
+    }
+    else if (position.x == game->x_max + 1)
+    {
+        return true;
+    }
+    else if (position.y == 0)
+    {
+        return true;
+    }
+    else if (position.y == game->y_max + 1)
+    {
+        return true;
+    }
+
+    return false;
 }
