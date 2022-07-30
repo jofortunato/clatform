@@ -1,5 +1,6 @@
 #ifndef H_GAME
 #define H_GAME
+#include <ncurses.h>
 
 #define MAX_CHARS 50
 
@@ -63,4 +64,6 @@ typedef struct ACTOR
     int level;
     POS position;
 } ACTOR;
+
+void start_game(GAME *game, ACTOR *actor);
 #endif

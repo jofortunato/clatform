@@ -11,13 +11,15 @@ INC_DIRS := $(shell find $(SRC) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
+LIBFLAGS= -lncurses
+
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJS) -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJS) -o $@ $(LIBFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.c
-	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@ 
+	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LIBFLAGS)
 
 .PHONY: clean
 clean:
