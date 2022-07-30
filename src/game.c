@@ -76,6 +76,10 @@ bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game)
         {
             return false;
         }
+        else if (has_platform(new_position, game->platforms) && !has_stair(new_position, game->stairs))
+        {
+            return false;
+        }
 
         break;
     case RIGHT:
