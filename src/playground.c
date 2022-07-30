@@ -15,22 +15,22 @@ WINDOW *create_playground(GAME *game, ACTOR *actor)
     int start_x = (COLS - game->x_max + 2) / 2;
 
     local_win = newwin(game->y_max + 2, game->x_max + 2, start_y, start_x);
-    box(local_win, 0, 0);
 
     draw_game(game, actor, local_win);
-
-    wrefresh(local_win);
 
     return local_win;
 }
 
 void draw_game(GAME *game, ACTOR *actor, WINDOW *playground)
 {
+    box(playground, 0, 0);
     print_stairs(game->stairs, playground, game->x_max + 1, game->y_max + 1);
     print_platforms(game->platforms, playground, game->x_max + 1, game->y_max + 1);
     print_coins(game->coins, playground, game->x_max + 1, game->y_max + 1);
 
     print_actor(actor, playground, game->x_max + 1, game->y_max + 1);
+
+    wrefresh(playground);
 }
 
 void print_platforms(PLATFORM *platform, WINDOW *playground, int cols, int lines)
