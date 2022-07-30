@@ -96,6 +96,10 @@ bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game)
         {
             return false;
         }
+        else if (!has_stair(new_position, game->stairs))
+        {
+            return false;
+        }
 
         break;
     case LEFT:
@@ -148,6 +152,20 @@ bool has_platform(POS position, PLATFORM *platform)
             return true;
         }
         platform = platform->next;
+    }
+
+    return false;
+}
+
+bool has_stair(POS position, STAIR *stair)
+{
+    while (stair != NULL)
+    {
+        if (stair->start.x == position.x && (position.y >= stair->start.y && position.y <= stair->end.y))
+        {
+            return true;
+        }
+        stair = stair->next;
     }
 
     return false;
