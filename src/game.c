@@ -84,6 +84,10 @@ bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game)
         {
             return false;
         }
+        else if (has_platform(new_position, game->platforms))
+        {
+            return false;
+        }
 
         break;
     case DOWN:
@@ -97,6 +101,10 @@ bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game)
     case LEFT:
         new_position.x--;
         if (is_outside_playground(new_position, game))
+        {
+            return false;
+        }
+        else if (has_platform(new_position, game->platforms))
         {
             return false;
         }
@@ -126,6 +134,20 @@ bool is_outside_playground(POS position, GAME *game)
     else if (position.y == game->y_max + 1)
     {
         return true;
+    }
+
+    return false;
+}
+
+bool has_platform(POS position, PLATFORM *platform)
+{
+    while (platform != NULL)
+    {
+        if (platform->start.y == position.y && (position.x >= platform->start.x && position.x <= platform->end.x))
+        {
+            return true;
+        }
+        platform = platform->next;
     }
 
     return false;

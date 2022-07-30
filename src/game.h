@@ -76,4 +76,5 @@ typedef struct ACTOR
 void start_game(GAME *game, ACTOR *actor);
 bool is_valid_movement(NEXT_MOVE next_move, ACTOR *actor, GAME *game);
 bool is_outside_playground(POS position, GAME *game);
+bool has_platform(POS position, PLATFORM *platform);
 #endif
