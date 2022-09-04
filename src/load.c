@@ -37,6 +37,8 @@ ACTOR *load_saved_game()
         }
     }
 
+    fclose(f);
+
     return saved_actor;
 }
 
@@ -55,6 +57,11 @@ GAME *load_level(int level)
 
     GAME *game;
     game = (GAME *)malloc(sizeof(GAME));
+    game->platforms = NULL;
+    game->stairs = NULL;
+    game->coins = NULL;
+    game->bots = NULL;
+
     int platform_x_start, platform_x_end, platform_y;
     int stair_y_start, stair_y_end, stair_x;
     POS coin_position;
@@ -96,6 +103,8 @@ GAME *load_level(int level)
             fscanf(f, "%i %i\n", &game->end.x, &game->end.y);
         }
     }
+
+    fclose(f);
 
     return game;
 }
@@ -149,4 +158,45 @@ void add_bot(GAME *game, POS position, int awarness)
 
     bot->next = game->bots;
     game->bots = bot;
+}
+
+void free_game(GAME *game)
+{
+    PLATFORM *aux_platform;
+
+    while (game->platforms != NULL)
+    {
+        aux_platform = game->platforms;
+        game->platforms = game->platforms->next;
+        free(aux_platform);
+    }
+
+    while (game->stairs != NULL)
+    {
+        STAIR *aux_stair;
+        aux_stair = game->stairs;
+
+        game->stairs = game->stairs->next;
+        free(aux_stair);
+    }
+
+    while (game->coins != NULL)
+    {
+        COIN *aux_coin;
+        aux_coin = game->coins;
+
+        game->coins = game->coins->next;
+        free(aux_coin);
+    }
+
+    while (game->bots != NULL)
+    {
+        BOT *aux_bot;
+        aux_bot = game->bots;
+
+        game->bots = game->bots->next;
+        free(aux_bot);
+    }
+
+    free(game);
 }

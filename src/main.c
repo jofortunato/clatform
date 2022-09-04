@@ -49,10 +49,10 @@ int main(void)
             break;
         case 3:
             // Exits the main menu via the do while condition.
-            if ((actor == NULL) & (game == NULL))
+            if ((actor != NULL) || (game != NULL))
             {
                 free(actor);
-                free(game);
+                free_game(game);
             }
             break;
         default:
