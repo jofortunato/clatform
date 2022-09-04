@@ -163,6 +163,9 @@ void add_bot(GAME *game, POS position, int awarness)
 void free_game(GAME *game)
 {
     PLATFORM *aux_platform;
+    STAIR *aux_stair;
+    COIN *aux_coin;
+    BOT *aux_bot;
 
     while (game->platforms != NULL)
     {
@@ -173,7 +176,6 @@ void free_game(GAME *game)
 
     while (game->stairs != NULL)
     {
-        STAIR *aux_stair;
         aux_stair = game->stairs;
 
         game->stairs = game->stairs->next;
@@ -182,7 +184,6 @@ void free_game(GAME *game)
 
     while (game->coins != NULL)
     {
-        COIN *aux_coin;
         aux_coin = game->coins;
 
         game->coins = game->coins->next;
@@ -191,7 +192,6 @@ void free_game(GAME *game)
 
     while (game->bots != NULL)
     {
-        BOT *aux_bot;
         aux_bot = game->bots;
 
         game->bots = game->bots->next;
