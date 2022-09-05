@@ -59,6 +59,13 @@ void start_game(GAME *game, ACTOR *actor)
                 draw_game(game, actor, playground);
             }
             break;
+        case 112: // Pause: 112 is ascii value for 'p'
+            // Add Here Function to Print Paused over the screen...
+
+            while ((ch = getch()) != 112)
+            {
+            }
+            break;
         default:
             break;
         }
